@@ -1,18 +1,31 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
+import { storiesOf, addDecorator } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
+import { withNotes } from '@storybook/addon-notes';
 
 import { Button, Welcome } from '@storybook/react/demo';
 import App from '../App';
 import CustomButton from '../components/Button/Button';
 
+const styles = {
+  textAlign: 'center'
+}
+
+const CenterDecorator = (storyFunc) => {
+  return <div style={styles}>{storyFunc()}</div>
+}
+
+const notes = `Button without link and default`;
+//addDecorator(CenterDecorator); ///for all stories
+
 storiesOf('Welcome', module)
   .add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
 storiesOf('Button', module)
-  .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
+  .addDecorator(CenterDecorator)
+  .add('with text', () => (<Button onClick={action('clicked')}>Hello Button</Button>))
   .add('with some emoji', () => <Button onClick={action('clicked')}>😀 😎 👍 💯</Button>);
 
 storiesOf('App', module)
@@ -20,6 +33,6 @@ storiesOf('App', module)
   .add('with title', () => <App title={'Hello Aviral'}/>);
 
 storiesOf('Custom Button', module)
-  .add('default', () => <CustomButton onClick={action('clicked')}>Button</CustomButton>)
+  .add('default', withNotes(notes)( () => <CustomButton onClick={action('clicked')}>Button</CustomButton>))
   .add('with color', () => <CustomButton onClick={action('clicked')} color={'secondary'}>Button</CustomButton>)
   .add('with background', () => <CustomButton onClick={action('clicked')} variant={'contained'} color={'secondary'}>Button</CustomButton>);
