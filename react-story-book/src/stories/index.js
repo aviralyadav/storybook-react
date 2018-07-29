@@ -8,6 +8,7 @@ import { withNotes } from '@storybook/addon-notes';
 import { Button, Welcome } from '@storybook/react/demo';
 import App from '../App';
 import CustomButton from '../components/Button/Button';
+import SelectBox from '../components/SelectBox/SelectBox';
 
 const styles = {
   textAlign: 'center'
@@ -36,3 +37,13 @@ storiesOf('Custom Button', module)
   .add('default', withNotes(notes)( () => <CustomButton onClick={action('clicked')}>Button</CustomButton>))
   .add('with color', () => <CustomButton onClick={action('clicked')} color={'secondary'}>Button</CustomButton>)
   .add('with background', () => <CustomButton onClick={action('clicked')} variant={'contained'} color={'secondary'}>Button</CustomButton>);
+
+const selectOptions = [
+  {name: 'One', value: 1},
+  {name: 'Two', value: 2},
+  {name: 'Three', value: 3}
+];
+
+storiesOf('Select', module)
+  .add('default', () => (<SelectBox options={selectOptions}/>))
+  .add('with placeholder', () => (<SelectBox placeholder={'Select'} options={selectOptions}/>));
